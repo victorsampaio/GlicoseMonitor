@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import vs.com.br.glicosemonitor.R;
+
 public class MenuRegisterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

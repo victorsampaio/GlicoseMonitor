@@ -19,7 +19,12 @@
         <activity
             android:name=".view.MenuRegisterActivity"
             android:label="@string/title_activity_menu_register"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.RegisterUserInformationsActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a03b983885f89ffea3e245d568bcb34bb1d3c26c" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
