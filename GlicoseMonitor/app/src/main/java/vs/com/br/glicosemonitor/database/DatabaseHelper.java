@@ -22,6 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<User, Integer> mUserDao = null;
 
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -50,19 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             e.printStackTrace();
         }
     }
- /* User */
 
-    public Dao<User, Integer> getUserDao() throws SQLException {
-        if (mUserDao == null) {
-            try {
-                mUserDao = getDao(User.class);
-            } catch (java.sql.SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return mUserDao;
-    }
 
     @Override
     public void close() {

@@ -14,12 +14,17 @@ public class User {
 
     public static final String FIELD_NAME_ID     = "id";
     public static final String FIELD_NAME_NAME   = "name";
+    public static final String FIELD_NAME_EMAIL   = "email";
 
     @DatabaseField(columnName = FIELD_NAME_ID, generatedId = true)
     private int mId;
 
     @DatabaseField(columnName = FIELD_NAME_NAME)
     private String mName;
+
+    @DatabaseField(columnName = FIELD_NAME_EMAIL)
+    private String mEmail;
+
 
     public User() {
         // Don't forget the empty constructor, needed by ORMLite.
@@ -39,5 +44,13 @@ public class User {
 
     public void setmName(String mName) {
         this.mName = mName;
+    }
+
+    public String getmEmail() {
+        return mEmail;
+    }
+
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
     }
 }

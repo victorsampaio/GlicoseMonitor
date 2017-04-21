@@ -11,4 +11,6 @@
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorAccent">#D50000</color>
 
+    <color name="colorButtonSaveRegister">#009688</color>
+
 </resources>

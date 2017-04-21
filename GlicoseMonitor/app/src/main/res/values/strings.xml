@@ -9,4 +9,10 @@
 
     <string name="register_title">Register</string>
 
+    <string name="text_register_glucose">Glusose</string>
+
+    <string name="text_report_glucose">Report</string>
+
+    <string name="text_graphic_glucose">Graphic</string>
+
 </resources>
