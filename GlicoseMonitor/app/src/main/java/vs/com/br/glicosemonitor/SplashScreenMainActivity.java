@@ -41,4 +41,4 @@ public class SplashScreenMainActivity extends AppCompatActivity implements Runna
     }
 }
 
-// Test Slack 1
+// Test Slack 2
