@@ -8,4 +8,12 @@
     tools:context="vs.com.br.glicosemonitor.view.MenuRegisterActivity"
     tools:showIn="@layout/app_bar_menu_register">
 
+    <EditText
+        android:id="@+id/edtValueGlucose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="135dp" />
 </android.support.constraint.ConstraintLayout>
