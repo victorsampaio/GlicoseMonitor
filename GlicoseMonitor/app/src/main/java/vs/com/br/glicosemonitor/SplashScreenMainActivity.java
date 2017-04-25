@@ -39,5 +39,6 @@ public class SplashScreenMainActivity extends AppCompatActivity implements Runna
         startActivity(intent);
         finish();
     }
-
 }
+
+// Test Slack
