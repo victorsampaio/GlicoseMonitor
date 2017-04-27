@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import vs.com.br.glicosemonitor.R;
 import vs.com.br.glicosemonitor.dao.UserDao;
-import vs.com.br.glicosemonitor.database.DatabaseHelper;
 import vs.com.br.glicosemonitor.model.User;
 
 public class RegisterUserInformationsActivity extends AppCompatActivity {

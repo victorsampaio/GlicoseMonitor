@@ -2,27 +2,37 @@ package vs.com.br.glicosemonitor.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import vs.com.br.glicosemonitor.R;
+import vs.com.br.glicosemonitor.dao.GlucoseDao;
+import vs.com.br.glicosemonitor.model.Glucose;
 
 public class MenuRegisterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "DEBUG: " + MenuRegisterActivity.class.getName();
     @BindView(R.id.edtValueGlucose)
     EditText edtValueGlucose;
+
+    int glucoseValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,9 @@ public class MenuRegisterActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                glucoseValue = Integer.parseInt(edtValueGlucose.getText().toString());
+                Log.d(TAG, "Glucose Value: " + glucoseValue);
 
                 saveDataGlucoseValue();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -56,7 +69,19 @@ public class MenuRegisterActivity extends AppCompatActivity
 
     private void saveDataGlucoseValue() {
 
+        Glucose glucose = new Glucose();
+        glucose.setmValue(glucoseValue);
 
+        Dao<Glucose, Integer> glucoseIntegerDao = null;
+        GlucoseDao glucoseDao = new GlucoseDao(this);
+
+        glucoseIntegerDao = glucoseDao.getGlucoseDao();
+
+        try {
+            glucoseIntegerDao.create(glucose);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

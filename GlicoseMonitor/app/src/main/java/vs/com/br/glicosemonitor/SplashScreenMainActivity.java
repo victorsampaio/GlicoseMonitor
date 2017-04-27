@@ -9,7 +9,6 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
 import io.fabric.sdk.android.Fabric;
-import vs.com.br.glicosemonitor.view.MenuRegisterActivity;
 import vs.com.br.glicosemonitor.view.RegisterUserInformationsActivity;
 
 public class SplashScreenMainActivity extends AppCompatActivity implements Runnable{

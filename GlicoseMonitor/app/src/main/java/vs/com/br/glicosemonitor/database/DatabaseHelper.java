@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import vs.com.br.glicosemonitor.model.Glucose;
 import vs.com.br.glicosemonitor.model.User;
 
 /**
@@ -32,6 +33,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             try {
                 TableUtils.createTable(connectionSource, User.class);
+                TableUtils.createTable(connectionSource, Glucose.class);
+
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
             }
@@ -43,7 +46,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
+
             TableUtils.dropTable(connectionSource, User.class, true);
+            TableUtils.dropTable(connectionSource, Glucose.class, true);
+
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             throw new RuntimeException(e);

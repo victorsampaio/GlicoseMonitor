@@ -7,7 +7,6 @@ import com.j256.ormlite.dao.Dao;
 
 import vs.com.br.glicosemonitor.database.DatabaseHelper;
 import vs.com.br.glicosemonitor.model.Glucose;
-import vs.com.br.glicosemonitor.model.User;
 
 /**
  * Created by VictorSampaio on 21/04/2017.
