@@ -1,6 +1,7 @@
 package vs.com.br.glicosemonitor.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -32,7 +33,7 @@ public class MenuRegisterActivity extends AppCompatActivity
     @BindView(R.id.edtValueGlucose)
     EditText edtValueGlucose;
 
-    int glucoseValue;
+    private int glucoseValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class MenuRegisterActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //noinspection deprecation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -72,7 +74,7 @@ public class MenuRegisterActivity extends AppCompatActivity
         Glucose glucose = new Glucose();
         glucose.setmValue(glucoseValue);
 
-        Dao<Glucose, Integer> glucoseIntegerDao = null;
+        Dao<Glucose, Integer> glucoseIntegerDao;
         GlucoseDao glucoseDao = new GlucoseDao(this);
 
         glucoseIntegerDao = glucoseDao.getGlucoseDao();
@@ -119,7 +121,7 @@ public class MenuRegisterActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
