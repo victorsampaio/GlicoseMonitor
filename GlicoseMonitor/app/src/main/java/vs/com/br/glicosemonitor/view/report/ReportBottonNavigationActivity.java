@@ -109,7 +109,6 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,7 +193,21 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
 
     private void registerUnitMeasurement() {
 
+        UnitOfMeasurementDao dao = new UnitOfMeasurementDao(this);
+        Dao<UnitOfMeasurement, Integer> unitOfMeasurementIntegerDao = null;
 
+        try {
+            unitOfMeasurementIntegerDao = dao.getUnitOfMeasurementIntegerDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        UnitOfMeasurement unitOfMeasurement = new UnitOfMeasurement();
+        try {
+            unitOfMeasurement.setUnitName(unitOfMeasurementStDb);
+        } catch (android.database.SQLException e ){
+            e.printStackTrace();
+        }
     }
 
 
