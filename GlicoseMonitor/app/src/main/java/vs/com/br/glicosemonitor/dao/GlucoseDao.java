@@ -36,6 +36,4 @@ public class GlucoseDao extends DatabaseHelper {
         mGlucoseDao = null;
         super.close();
     }
-
-
 }

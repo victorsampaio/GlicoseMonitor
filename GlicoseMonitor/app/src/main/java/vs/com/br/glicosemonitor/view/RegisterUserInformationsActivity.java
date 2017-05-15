@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -21,6 +22,13 @@ public class RegisterUserInformationsActivity extends AppCompatActivity {
     @BindView(R.id.btnSaveUserRegister)
     Button btnSaveUserRegister;
 
+    @BindView(R.id.edtUserName)
+    EditText edtUserName;
+
+    @BindView(R.id.edtEmail)
+    EditText edtEmail;
+
+    private String userName, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,9 @@ public class RegisterUserInformationsActivity extends AppCompatActivity {
     @OnClick(R.id.btnSaveUserRegister)
     public void submit(View view) {
         // TODO submit data to server...
+        userName = edtUserName.getText().toString();
+        email = edtEmail.getText().toString();
+
         saveUserRegister();
     }
 
@@ -47,13 +58,13 @@ public class RegisterUserInformationsActivity extends AppCompatActivity {
         }
 
         User user = new User();
-        user.setmName("Mike");
+        user.setmName(userName);
+        user.setmEmail(email);
 
         try {
             try {
                 //userDao.create(user);
                 userDao.createOrUpdate(user);
-
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
             }

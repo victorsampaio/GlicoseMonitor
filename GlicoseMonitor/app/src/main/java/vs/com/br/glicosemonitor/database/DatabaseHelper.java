@@ -10,6 +10,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import vs.com.br.glicosemonitor.model.Glucose;
+import vs.com.br.glicosemonitor.model.UnitOfMeasurement;
 import vs.com.br.glicosemonitor.model.User;
 
 /**
@@ -22,7 +23,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private Dao<User, Integer> mUserDao = null;
-
+    private Dao<Glucose, Integer> mGlucoseDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             try {
                 TableUtils.createTable(connectionSource, User.class);
                 TableUtils.createTable(connectionSource, Glucose.class);
-
+                TableUtils.createTable(connectionSource, UnitOfMeasurement.class);
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
             }
@@ -49,6 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             TableUtils.dropTable(connectionSource, User.class, true);
             TableUtils.dropTable(connectionSource, Glucose.class, true);
+            TableUtils.dropTable(connectionSource, UnitOfMeasurement.class, true);
 
             onCreate(database, connectionSource);
         } catch (SQLException e) {
@@ -59,11 +61,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
+/*
     @Override
     public void close() {
         mUserDao = null;
-
+        mGlucoseDao = null;
         super.close();
     }
+*/
 
 }

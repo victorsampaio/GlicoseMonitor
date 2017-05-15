@@ -18,11 +18,10 @@ public class Glucose {
     private int id;
 
     @DatabaseField(columnName = FIELD_NAME_VALUE)
-    private int mValue;
+    private double mValue;
 
     public Glucose() {
     }
-
 
     public int getId() {
         return id;
@@ -32,11 +31,12 @@ public class Glucose {
         this.id = id;
     }
 
-    public int getmValue() {
+    public double getmValue() {
         return mValue;
     }
 
-    public void setmValue(int mValue) {
+    public void setmValue(double mValue) {
         this.mValue = mValue;
     }
+
 }

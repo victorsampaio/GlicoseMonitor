@@ -11,7 +11,6 @@ import com.j256.ormlite.table.DatabaseTable;
 public class User {
 
     public static final String TABLE_NAME_USERS = "users";
-
     public static final String FIELD_NAME_ID     = "id";
     public static final String FIELD_NAME_NAME   = "name";
     public static final String FIELD_NAME_EMAIL   = "email";

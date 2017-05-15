@@ -1,10 +1,10 @@
 package vs.com.br.glicosemonitor.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,26 +14,37 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import vs.com.br.glicosemonitor.R;
 import vs.com.br.glicosemonitor.dao.GlucoseDao;
 import vs.com.br.glicosemonitor.model.Glucose;
+import vs.com.br.glicosemonitor.view.report.ReportBottonNavigationActivity;
+import vs.com.br.glicosemonitor.view.report.ReportScrollingActivity;
 
 public class MenuRegisterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "DEBUG: " + MenuRegisterActivity.class.getName();
+
     @BindView(R.id.edtValueGlucose)
     EditText edtValueGlucose;
 
-    private int glucoseValue;
+    @BindView(R.id.button)
+    Button button;
+
+    int glucoseValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +63,9 @@ public class MenuRegisterActivity extends AppCompatActivity
                 glucoseValue = Integer.parseInt(edtValueGlucose.getText().toString());
                 Log.d(TAG, "Glucose Value: " + glucoseValue);
 
-                saveDataGlucoseValue();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //saveDataGlucoseValue();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
             }
         });
 
@@ -69,23 +80,75 @@ public class MenuRegisterActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void saveDataGlucoseValue() {
+    @OnClick(R.id.button)
+    public void submit(View view) {
+        // TODO submit data to server...
+        String glucose = edtValueGlucose.getText().toString();
+
+        glucoseValue = Integer.parseInt(glucose);
+        Log.d(TAG, "glucoseValue: " + glucoseValue);
+        saveUserRegister();
+    }
+
+    private void saveUserRegister() {
+
+        GlucoseDao dao = new GlucoseDao(this);
+        Dao<Glucose, Integer> glucoseDao = null;
+
+        try {
+            glucoseDao = dao.getGlucoseDao();
+        } catch (android.database.SQLException e) {
+            e.printStackTrace();
+        }
 
         Glucose glucose = new Glucose();
         glucose.setmValue(glucoseValue);
 
-        Dao<Glucose, Integer> glucoseIntegerDao;
-        GlucoseDao glucoseDao = new GlucoseDao(this);
+        try {
+            try {
+                glucoseDao.create(glucose);
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (android.database.SQLException e) {
+            e.printStackTrace();
+        }
 
-        glucoseIntegerDao = glucoseDao.getGlucoseDao();
+        verifySaveAndPutScreen();
+    }
+
+    private void verifySaveAndPutScreen() {
+
+        /* USER */
+        Dao<Glucose, Integer> glucoseDao = null;
+        GlucoseDao dao = new GlucoseDao(this);
+        Glucose glucose = new Glucose();
+        List<Glucose> glucoses;
+        glucoses = new ArrayList<Glucose>();
 
         try {
-            glucoseIntegerDao.create(glucose);
+            glucoseDao = dao.getGlucoseDao();
+        } catch (android.database.SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            glucoses = glucoseDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        for (Glucose glucoseL : glucoses) {
+            //idDriver = driverL.getId();
+            double valueDb = glucoseL.getmValue();
+        }
+
+        if (glucoses.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Usuario Não Encontrado. Tente Novamente",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -130,11 +193,16 @@ public class MenuRegisterActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
+            Intent it = new Intent(getApplicationContext(), ReportActivity.class);
+            startActivity(it);
 
         } else if (id == R.id.nav_manage) {
+            Intent it = new Intent(getApplicationContext(), ReportBottonNavigationActivity.class);
+            startActivity(it);
 
         } else if (id == R.id.nav_share) {
-
+            Intent it = new Intent(getApplicationContext(), ReportScrollingActivity.class);
+            startActivity(it);
         } else if (id == R.id.nav_send) {
 
         }
