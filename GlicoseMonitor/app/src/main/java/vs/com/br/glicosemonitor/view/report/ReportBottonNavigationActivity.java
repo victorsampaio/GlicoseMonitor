@@ -161,9 +161,10 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
             unitOfMeasurementSt = unitOfMeasurementListDb.getUnitName();
 
             if (unitOfMeasurementSt.equals("mg/dl")){
-
+                layoutMgdl.setVisibility(View.VISIBLE);
             }
             if (unitOfMeasurementSt.equals("mmol/l")){
+                layoutMmoll.setVisibility(View.VISIBLE);
 
             }
         }
