@@ -38,6 +38,10 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
     private TextView mTextMessage;
     String unitOfMeasurementSt, unitOfMeasurementStDb;
 
+    @BindView(R.id.layout_mgdl)
+    RelativeLayout layoutMgdl;
+    @BindView(R.id.layout_mmoll)
+    RelativeLayout layoutMmoll;
     @BindView(R.id.layout_home)
     RelativeLayout layoutHome;
     @BindView(R.id.layout_dashboard)
@@ -155,6 +159,13 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
 
         for (UnitOfMeasurement unitOfMeasurementListDb : unitOfMeasurements) {
             unitOfMeasurementSt = unitOfMeasurementListDb.getUnitName();
+
+            if (unitOfMeasurementSt.equals("mg/dl")){
+
+            }
+            if (unitOfMeasurementSt.equals("mmol/l")){
+
+            }
         }
 
         if (unitOfMeasurements.isEmpty()) {
@@ -208,8 +219,14 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         } catch (android.database.SQLException e ){
             e.printStackTrace();
         }
-    }
 
+        try {
+            unitOfMeasurementIntegerDao.createOrUpdate(unitOfMeasurement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private void verifyFieldsToSave() {
 
