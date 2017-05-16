@@ -33,10 +33,11 @@ import vs.com.br.glicosemonitor.model.UnitOfMeasurement;
 
 public class ReportBottonNavigationActivity extends AppCompatActivity {
 
-    final Context context = this;
+    private final Context context = this;
 
-    private TextView mTextMessage;
-    String unitOfMeasurementSt, unitOfMeasurementStDb;
+    private String unitOfMeasurementSt;
+    private String unitOfMeasurementStDb;
+    private double valueDb;
 
     @BindView(R.id.layout_mgdl)
     RelativeLayout layoutMgdl;
@@ -55,8 +56,11 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
     @BindView(R.id.edtGlucoseDecimal)
     EditText edtGlucoseDecimal;
 
-    int glucoseValueInt;
-    double weightValue, glucoseValueDecimal, glucoseValueDecimalDiv, glucoseValue, valueDb;
+    private int glucoseValueInt;
+    private double weightValue;
+    private double glucoseValueDecimal;
+    private double glucoseValueDecimalDiv;
+    private double glucoseValue;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -119,7 +123,7 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_botton_navigation);
         ButterKnife.bind(this);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        TextView mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -134,7 +138,6 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
                 //saveUserRegister();
             }
         });
-
         verifyUnitOfMeasurement();
     }
 
@@ -152,6 +155,7 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         List<UnitOfMeasurement> unitOfMeasurements = new ArrayList<UnitOfMeasurement>();
 
         try {
+            assert unitOfMeasurementIntegerDao != null;
             unitOfMeasurements = unitOfMeasurementIntegerDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -160,12 +164,11 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         for (UnitOfMeasurement unitOfMeasurementListDb : unitOfMeasurements) {
             unitOfMeasurementSt = unitOfMeasurementListDb.getUnitName();
 
-            if (unitOfMeasurementSt.equals("mg/dl")){
+            if (unitOfMeasurementSt.equals("mg/dl")) {
                 layoutMgdl.setVisibility(View.VISIBLE);
             }
-            if (unitOfMeasurementSt.equals("mmol/l")){
+            if (unitOfMeasurementSt.equals("mmol/l")) {
                 layoutMmoll.setVisibility(View.VISIBLE);
-
             }
         }
 
@@ -199,7 +202,6 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 
@@ -217,35 +219,35 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         UnitOfMeasurement unitOfMeasurement = new UnitOfMeasurement();
         try {
             unitOfMeasurement.setUnitName(unitOfMeasurementStDb);
-        } catch (android.database.SQLException e ){
+        } catch (android.database.SQLException e) {
             e.printStackTrace();
         }
 
         try {
+            assert unitOfMeasurementIntegerDao != null;
             unitOfMeasurementIntegerDao.createOrUpdate(unitOfMeasurement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        verifyUnitOfMeasurement();
     }
 
     private void verifyFieldsToSave() {
-
-        if (edtWeight.getText().toString().equals("") || edtWeight == null || edtWeight.getText().toString() == null) {
+        if (edtWeight.getText().toString().equals("") || edtWeight == null) {
             edtWeight.setError("Verifique o valor");
             return;
         } else {
             weightValue = Double.parseDouble(edtWeight.getText().toString());
         }
 
-        if (edtGlucoseInt.getText().toString().equals("") || edtGlucoseInt == null || edtWeight.getText().toString() == null) {
+        if (edtGlucoseInt.getText().toString().equals("") || edtGlucoseInt == null) {
             edtGlucoseInt.setError("Verifique o valor");
             return;
         } else {
             glucoseValueInt = Integer.parseInt(edtGlucoseInt.getText().toString());
         }
 
-        if (edtGlucoseDecimal.getText().toString().equals("") || edtGlucoseDecimal == null || edtGlucoseDecimal.getText().toString() == null) {
+        if (edtGlucoseDecimal.getText().toString().equals("") || edtGlucoseDecimal == null) {
             edtGlucoseDecimal.setError("Verifique o valor");
             return;
         } else {
@@ -258,23 +260,19 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
     }
 
     private void verifyWeigth() {
-
         if (weightValue < 1 || weightValue > 400) {
             edtWeight.setError("Verifique o valor");
-            return;
         } else {
             verifyFieldGlucoseInt();
         }
     }
 
     private void verifyFieldGlucoseInt() {
-
         if (glucoseValueInt < 0 || glucoseValueInt > 40) {
             edtWeight.setError("Verifique o valor");
         } else {
             verifyFieldGlucoseDecimal();
         }
-
     }
 
     private void verifyFieldGlucoseDecimal() {
@@ -306,6 +304,7 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
 
         try {
             try {
+                assert glucoseDao != null;
                 glucoseDao.create(glucose);
             } catch (java.sql.SQLException e) {
                 e.printStackTrace();
@@ -313,7 +312,6 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         } catch (android.database.SQLException e) {
             e.printStackTrace();
         }
-
         verifySaveAndPutScreen();
     }
 
@@ -333,6 +331,7 @@ public class ReportBottonNavigationActivity extends AppCompatActivity {
         }
 
         try {
+            assert glucoseDao != null;
             glucoses = glucoseDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
